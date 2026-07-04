@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Your results</h1>
+
+{% if matches %}
+<p class="subtitle">Based on your answers, you may be eligible for {{ matches|length }} scheme{{ 's' if matches|length != 1 else '' }}:</p>
+
+<div class="scheme-list">
+    {% for scheme in matches %}
+    <div class="scheme-card">
+        <span class="scheme-category">{{ scheme.category }}</span>
+        <h2>{{ scheme.name }}</h2>
+        <p>{{ scheme.description }}</p>
+        <div class="scheme-actions">
+            <a href="{{ scheme.apply_url }}" target="_blank" rel="noopener" class="btn-secondary">Official portal</a>
+            <a href="{{ url_for('lead', scheme_id=scheme.id) }}" class="btn-primary">Get help applying</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="subtitle">We couldn't match a scheme to your answers right now. This tool covers a curated list of major central schemes — many state-specific schemes may still apply to you.</p>
+{% endif %}
+
+<p class="back-link"><a href="{{ url_for('index') }}">&larr; Check again with different details</a></p>
+{% endblock %}

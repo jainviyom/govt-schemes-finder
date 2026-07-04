@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Yojana Checker - Find Government Schemes You're Eligible For{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <a href="{{ url_for('index') }}" class="brand">Yojana Checker</a>
+        <span class="tagline">Find Indian government schemes you qualify for</span>
+    </header>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+        <p>This tool gives a simplified eligibility screening based on commonly published criteria. Always confirm on the official scheme portal before applying. We are not affiliated with the Government of India.</p>
+    </footer>
+</body>
+</html>

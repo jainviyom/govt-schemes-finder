@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="thank-you">
+    <h1>Thanks — you're on the list!</h1>
+    <p class="subtitle">A verified consultant will call you soon about <strong>{{ scheme.name }}</strong>.</p>
+    <p class="back-link"><a href="{{ url_for('index') }}">&larr; Check eligibility for someone else</a></p>
+</div>
+{% endblock %}
