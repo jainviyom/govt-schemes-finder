@@ -52,6 +52,31 @@ Edit the `SCHEMES` list in `schemes_data.py`. Each entry has a `criteria`
 dict — supported keys are documented via `matcher.py`. No template changes
 needed; the results page renders whatever matches.
 
+## Deploying to Render
+
+This repo includes a `render.yaml` Blueprint so Render can provision the
+service automatically:
+
+1. Go to [render.com](https://render.com) and sign in (GitHub login is easiest).
+2. **New +** → **Blueprint** → connect the `govt-schemes-finder` GitHub repo.
+3. Render reads `render.yaml` and proposes one web service. It auto-generates
+   `SECRET_KEY`; you'll be prompted to type in a value for `ADMIN_PASSWORD`
+   (pick a real one, not `changeme`).
+4. Click **Apply** / **Create**. First build takes a couple of minutes; the
+   free tier will spin down after 15 minutes of inactivity and take ~30-60s
+   to wake back up on the next request.
+5. Every push to `main` auto-redeploys.
+
+**Important — leads database persistence**: the free tier's disk is
+ephemeral, so `instance/leads.db` (where captured leads live) is wiped on
+every redeploy or restart. That's fine for testing, but since leads are the
+whole monetization model here, before relying on this for real leads either:
+- upgrade the web service to a paid instance type and attach a Render
+  **persistent disk** mounted at `instance/`, or
+- swap SQLite for Render's managed Postgres (bigger change: swap the
+  `sqlite3` calls in `app.py` for `psycopg2`/`SQLAlchemy` and a
+  `DATABASE_URL` env var).
+
 ## Before going live
 
 - Set a strong `SECRET_KEY` and `ADMIN_PASSWORD` as environment variables.
